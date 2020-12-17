@@ -1,0 +1,3 @@
+rootProject.name = 'myoath2-demo'
+include 'xtapp'
+include 'oauth-server'
