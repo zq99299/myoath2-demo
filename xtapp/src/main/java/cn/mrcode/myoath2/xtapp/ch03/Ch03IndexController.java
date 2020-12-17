@@ -86,7 +86,7 @@ public class Ch03IndexController {
         // f5f1876f-206c-4d69-b9f0-da9658999200|d945e424-827e-4280-904d-0cc808628274
         paramsMap.put("token", accessToken.split("\\|")[0]);
         String result = HttpURLClient.doPost(protectedURl, HttpURLClient.mapToStr(paramsMap));
-        logger.info("通过 accessToken 访问受保护的资源,获取到订单信息" + accessToken);
+        logger.info("通过 accessToken 访问受保护的资源,获取到订单信息" + result);
         return result;
     }
 }
