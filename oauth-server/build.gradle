@@ -14,6 +14,10 @@ dependencies {
 
 
     compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    compile group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+    compile group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+    compile group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+    compile group: 'junit', name: 'junit', version: '4.13.1'
 }
 
 test {
