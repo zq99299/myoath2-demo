@@ -55,7 +55,7 @@ public class JWTTest {
     }
 
     /**
-     * 使用密匙解析 JWT 令牌
+     * 使用正确的密匙解析 JWT 令牌
      */
     @Test
     public void parserJwt() {
@@ -76,38 +76,26 @@ public class JWTTest {
         System.out.println("jwt iat:" + body.getIssuedAt());
     }
 
-    static String publicKey = "QgkAQIDAQAB";
-    static String privateKey = "hellooauth";
+    /**
+     * 使用错误的的密匙解析 JWT 令牌
+     */
+    @Test
+    public void parserJwtError() {
+        Key key = new SecretKeySpec("hellooauthhellooauthhellooauthhellooau12".getBytes(), SignatureAlgorithm.HS256.getJcaName());
+        String jwt = buildJwt();
 
+        // JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+        Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt);
 
-    public static PublicKey getPublicKey() {
-        try {
-//            byte[] keyBytes = Base64.getDecoder().decode(publicKey.getBytes());
-            byte[] keyBytes = (new BASE64Decoder()).decodeBuffer(publicKey); // 正确方式
+        JwsHeader header = claimsJws.getHeader();
+        Claims body = claimsJws.getBody();
 
-            RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(keyBytes));
-//            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
-//            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            return pubKey;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static PrivateKey getPrivateKey() {
-
-        try {
-//            byte[] keyBytes = Base64.getDecoder().decode(privateKey.getBytes());
-            byte[] keyBytes = (new BASE64Decoder()).decodeBuffer(privateKey); // 正确方式
-
-            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            return keyFactory.generatePrivate(keySpec);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        System.out.println("jwt header:" + header);
+        System.out.println("jwt body:" + body);
+        System.out.println("jwt sub:" + body.getSubject());
+        System.out.println("jwt aud:" + body.getAudience());
+        System.out.println("jwt iss:" + body.getIssuer());
+        System.out.println("jwt exp:" + body.getExpiration());
+        System.out.println("jwt iat:" + body.getIssuedAt());
     }
 }
