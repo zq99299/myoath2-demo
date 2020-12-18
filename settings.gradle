@@ -1,3 +1,7 @@
 rootProject.name = 'myoath2-demo'
 include 'xtapp'
 include 'oauth-server'
+
+include 'springsecurity101-cloud-oauth2-client'
+include 'springsecurity101-cloud-oauth2-server'
+include 'springsecurity101-cloud-oauth2-userservice'
